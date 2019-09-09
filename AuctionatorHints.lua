@@ -678,9 +678,16 @@ hooksecurefunc (GameTooltip, "SetHyperlink",
   end
 );
 
+--[[ maybe this is only for chat and not good
 hooksecurefunc (ItemRefTooltip, "SetHyperlink",
   function (tip, itemstring)
     local name, link = GetItemInfo (itemstring);
     Atr_ShowTipWithPricing (tip, link);
   end
 );
+]]
+
+ItemRefTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
+  local name, link = tooltip:GetItem()
+  Atr_ShowTipWithPricing (tooltip, link);
+end)
