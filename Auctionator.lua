@@ -4478,9 +4478,9 @@ end
 function Atr_Duration_Initialize(self)
   Auctionator.Debug.Message( 'Atr_Duration_Initialize', self )
 
-  Atr_Dropdown_AddPick (self, AUCTION_DURATION_ONE, 1, Atr_Duration_OnClick);
-  Atr_Dropdown_AddPick (self, AUCTION_DURATION_TWO, 2, Atr_Duration_OnClick);
-  Atr_Dropdown_AddPick (self, AUCTION_DURATION_THREE, 3, Atr_Duration_OnClick);
+  Atr_Dropdown_AddPick (self, '2h', 1, Atr_Duration_OnClick);
+  Atr_Dropdown_AddPick (self, '8h', 2, Atr_Duration_OnClick);
+  Atr_Dropdown_AddPick (self, '24h', 3, Atr_Duration_OnClick);
 
 end
 
