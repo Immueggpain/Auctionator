@@ -94,18 +94,21 @@ end
 -- TODO: Will probably want to special case Armor for inventoryTypeFilters
 for index, classID in ipairs( ITEM_CLASS_IDS ) do
   local name = GetItemClassInfo( classID )
-  local key = name
-  local subClasses, filter = GenerateSubClasses( classID, name, key )
+  if name ~= nil then  -- some classes can be nil, cuz not in this expansion yet!
+	  print(name, classID)
+	  local key = name
+	  local subClasses, filter = GenerateSubClasses( classID, name, key )
 
-  local categoryFilter = Auctionator.Filter:new({
-    classID = classID,
-    name = name,
-    key = key,
-    filter = filter,
-    subClasses = subClasses
-  })
+	  local categoryFilter = Auctionator.Filter:new({
+		classID = classID,
+		name = name,
+		key = key,
+		filter = filter,
+		subClasses = subClasses
+	  })
 
-  table.insert( Auctionator.Filters, categoryFilter )
+	  table.insert( Auctionator.Filters, categoryFilter )
+  end
 end
 
 for index, filter in ipairs( Auctionator.Filters ) do
