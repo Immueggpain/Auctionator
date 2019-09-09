@@ -3117,7 +3117,7 @@ function Atr_SetDepositText()
     local duration = UIDropDownMenu_GetSelectedValue(Atr_Duration);
     local deposit1 = GetAuctionDeposit (duration, MoneyInputFrame_GetCopper(Atr_StartingPrice), MoneyInputFrame_GetCopper(Atr_StackPrice), Atr_StackSize(), Atr_Batch_NumAuctions:GetNumber());
 
-    Atr_Deposit_Text:SetText (ZT("Deposit")..":    "..zc.priceToMoneyString(deposit1, true));
+    Atr_Deposit_Text:SetText (ZT("Deposit")..": "..zc.priceToMoneyString(deposit1, true));
   else
     Atr_Deposit_Text:SetText ("");
   end

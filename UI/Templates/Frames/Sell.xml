@@ -265,8 +265,8 @@
               <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-304"/></Offset></Anchor></Anchors>
             </FontString>
 
-            <FontString name="Atr_Deposit_Text" inherits="GameFontHighlightSmall" text="">
-              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-342"/></Offset></Anchor></Anchors>
+            <FontString name="Atr_Deposit_Text" inherits="NumberFontNormalRight" text="">
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="8" y="-341"/></Offset></Anchor></Anchors>
             </FontString>
 
           </Layer>
