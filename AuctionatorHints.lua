@@ -542,12 +542,14 @@ hooksecurefunc (GameTooltip, "SetInventoryItem",
 );
 
 
+--[[ guild bank not exists yet, so no SetGuildBankItem method
 hooksecurefunc (GameTooltip, "SetGuildBankItem",
   function (tip, tab, slot)
     local _, num = GetGuildBankItemInfo(tab, slot);
     Atr_ShowTipWithPricing (tip, GetGuildBankItemLink(tab, slot), num);
   end
 );
+]]
 
 
 hooksecurefunc( GameTooltip, 'SetRecipeResultItem',
