@@ -95,7 +95,6 @@ end
 for index, classID in ipairs( ITEM_CLASS_IDS ) do
   local name = GetItemClassInfo( classID )
   if name ~= nil then  -- some classes can be nil, cuz not in this expansion yet!
-	  print(name, classID)
 	  local key = name
 	  local subClasses, filter = GenerateSubClasses( classID, name, key )
 
