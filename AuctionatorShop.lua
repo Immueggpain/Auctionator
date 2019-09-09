@@ -469,7 +469,7 @@ function Atr_DropDownSL_OnShow (self)
 
   UIDropDownMenu_Initialize   (self, Atr_DropDownSL_Initialize);
   UIDropDownMenu_SetSelectedValue (self, curIndex);
-  UIDropDownMenu_SetWidth     (self, 150);
+  UIDropDownMenu_SetWidth     (self, 130);
   UIDropDownMenu_JustifyText    (self, "CENTER");
 end
 
