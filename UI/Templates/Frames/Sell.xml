@@ -84,12 +84,8 @@
             self:ClearFocus()
           </OnEnterPressed>
           <OnCharComposition>
-            Atr_Item_Autocomplete(self)
           </OnCharComposition>
           <OnChar>
-            if ( not self:IsInIMECompositionMode() ) then
-              Atr_Item_Autocomplete( self )
-            end
           </OnChar>
           <OnEscapePressed>
             self:ClearFocus()
