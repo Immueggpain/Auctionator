@@ -3478,7 +3478,6 @@ function Atr_HideLineTooltip (self)
   Auctionator.Debug.Message( 'Atr_HideLineTooltip', self )
 
   GameTooltip:Hide();
-  BattlePetTooltip:Hide();
 end
 
 
