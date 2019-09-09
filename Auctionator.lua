@@ -679,7 +679,7 @@ local function Atr_ModTradeSkillFrame()
     gTradeSkillFrameModded = true
 
     local button = CreateFrame("BUTTON", "Auctionator_Search", TradeSkillFrame, "UIPanelButtonTemplate");
-    button:SetPoint("RIGHT", "TradeSkillFrame", "RIGHT", -35, 100);
+    button:SetPoint("RIGHT", "TradeSkillFrame", "RIGHT", -80, 0);
 
     button:SetHeight (20)
     button:SetText(ZT("AH"))
