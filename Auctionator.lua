@@ -2645,7 +2645,6 @@ function Atr_HideRecTooltip ()
 
   gCurrentPane.tooltipvisible = nil;
   GameTooltip:Hide();
-  BattlePetTooltip:Hide();
 
 end
 
