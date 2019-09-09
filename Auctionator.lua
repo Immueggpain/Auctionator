@@ -1075,7 +1075,7 @@ function Atr_Init()
 
   gShopPane = Atr_AddSellTab (ZT("Buy"),      BUY_TAB);
   gSellPane = Atr_AddSellTab (ZT("Sell"),     SELL_TAB);
-  gMorePane = Atr_AddSellTab (ZT("More").."...",  MORE_TAB);
+  gMorePane = Atr_AddSellTab (ZT("More"),  MORE_TAB);
 
   Atr_AddMainPanel ();
 
@@ -5108,4 +5108,41 @@ function FromTightTime(tt)
   return (tt*60) + gTimeTightZero;
 
 end
+
+-----------NEW THINGS------------------------------ 
+
+function Atr_OpenBag(id)
+	if not bagOpen[id] and container[id] then
+		local size = containerSize[id]
+		if size ~= 0 then
+			ContainerFrame_GenerateFrame(container[id], size > 0 and size or -size, id)
+		end
+	end
+end
+
+function Atr_OpenAllBankBags()
+	for id = NUM_BAG_SLOTS + 1 , NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
+			OpenBag(id)
+	end
+end
+
+function Atr_OpenAllCarryBags()
+	for id = BACKPACK_CONTAINER , NUM_BAG_SLOTS do
+			OpenBag(id)
+	end
+end
+
+local frame = CreateFrame('Frame')
+frame:RegisterEvent("BANKFRAME_OPENED")
+frame:RegisterEvent("AUCTION_HOUSE_SHOW")
+frame:RegisterEvent("AUCTION_HOUSE_CLOSED")
+frame:SetScript("OnEvent", function(self, event, arg1)
+	if event == "BANKFRAME_OPENED" then
+		Atr_OpenAllBankBags()
+	elseif event == "AUCTION_HOUSE_SHOW" then
+		Atr_OpenAllCarryBags()
+	elseif event == "AUCTION_HOUSE_CLOSED" then
+		CloseAllBags()
+    end
+end)
 
