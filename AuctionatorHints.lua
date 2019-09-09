@@ -552,6 +552,7 @@ hooksecurefunc (GameTooltip, "SetGuildBankItem",
 ]]
 
 
+--[[ no SetRecipeReagentItem & SetRecipeResultItem method yet
 hooksecurefunc( GameTooltip, 'SetRecipeResultItem',
   function( tip, itemId )
     local link = C_TradeSkillUI.GetRecipeItemLink( itemId )
@@ -569,6 +570,7 @@ hooksecurefunc( GameTooltip, 'SetRecipeReagentItem',
     Atr_ShowTipWithPricing( tip, link, count )
   end
 );
+]]
 
 hooksecurefunc (GameTooltip, "SetTradePlayerItem",
   function (tip, id)
