@@ -253,32 +253,9 @@ end
 
 -----------------------------------------
 
-local function IsCataEnchanting (prof)
-  Auctionator.Debug.Message( 'IsCataEnchanting' )
-
-  if (prof) then
-    local profname, _, skillLevel = GetProfessionInfo (prof)
-
-    if (zc.StringSame ("enchanting", profname) and skillLevel >= 450) then
-      return true
-    end
-  end
-
-  return false
-
-end
-
------------------------------------------
-
 local function IsCataEnchanter()
   Auctionator.Debug.Message( 'IsCataEnchanter' )
-
-  local prof1, prof2 = GetProfessions()
-
-  if (IsCataEnchanting (prof1) or IsCataEnchanting (prof2)) then
-    return true
-  end
-
+  -- always false cuz it's classic. ofc no cataclysm enchanter(450+ skill)
   return false
 end
 
