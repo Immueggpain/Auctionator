@@ -601,50 +601,6 @@ end
 
 -----------------------------------------
 
-local function Atr_OnClickTradeSkillBut()
-  Auctionator.Debug.Message( 'Atr_OnClickTradeSkillBut' )
-
-  if (not AuctionFrame or not AuctionFrame:IsShown()) then
-    Atr_Error_Display (ZT("When the Auction House is open\nclicking this button tells Auctionator\nto scan for the item and all its reagents."))
-    return
-  end
-
-  Atr_SelectPane (BUY_TAB);
-
-  local index = TradeSkillFrame.RecipeList:GetSelectedRecipeID()
-
-
-  local link = C_TradeSkillUI.GetRecipeItemLink(index)
-
-  local _, _, _, _, _, itemType = GetItemInfo (link);
-
-  local numReagents = C_TradeSkillUI.GetRecipeNumReagents(index)
-
-  local reagentId
-
-  local shoppingListName = GetItemInfo (link)
-  if (shoppingListName == nil) then
-    shoppingListName = C_TradeSkillUI.GetRecipeInfo(index).name
-  end
-
-  local items = {}
-
-  if (shoppingListName) then
-    table.insert (items, shoppingListName)
-  end
-
-  for reagentId = 1, numReagents do
-    local reagentName = C_TradeSkillUI.GetRecipeReagentInfo(index, reagentId)
-    if (reagentName and not zc.StringSame(reagentName, "Crystal Vial")) then
-      table.insert (items, reagentName)
-    end
-  end
-
-  Atr_SearchAH (shoppingListName, items, itemType)
-end
-
------------------------------------------
-
 local function Atr_ModTradeSkillFrame()
   Auctionator.Debug.Message( 'Atr_ModTradeSkillFrame' )
 
@@ -655,15 +611,8 @@ local function Atr_ModTradeSkillFrame()
   if (TradeSkillFrame) then
     gTradeSkillFrameModded = true
 
-    local button = CreateFrame("BUTTON", "Auctionator_Search", TradeSkillFrame, "UIPanelButtonTemplate");
-    button:SetPoint("RIGHT", "TradeSkillFrame", "RIGHT", -80, 0);
+	-- api is old, can't modify TradeSkillFrame
 
-    button:SetHeight (20)
-    button:SetText(ZT("AH"))
-    button:SetNormalFontObject(_G["GameFontNormalSmall"])
-    button:SetHighlightFontObject(_G["GameFontNormalSmall"])
-    button:SetDisabledFontObject(_G["GameFontNormalSmall"])
-    button:SetScript ("OnClick", Atr_OnClickTradeSkillBut)
     zz ("TradeSkillFrame modded")
   else
     zz ("TradeSkillFrame not loaded")

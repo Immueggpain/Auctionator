@@ -617,6 +617,25 @@ hooksecurefunc (GameTooltip, "SetInboxItem",
   end
 );
 
+
+hooksecurefunc(GameTooltip,"SetTradeSkillItem",
+	function(tip,skillIndex,reagentIndex)
+		local itemLink
+		local itemNum
+		if reagentIndex==nil then
+			-- result item
+			itemLink = GetTradeSkillItemLink(skillIndex)
+			-- result item num can vary, so just set num to 1
+			itemNum = 1
+		else
+			itemLink = GetTradeSkillReagentItemLink(skillIndex,reagentIndex)
+			_, _, itemNum, _ = GetTradeSkillReagentInfo(skillIndex, reagentIndex)
+		end
+		Atr_ShowTipWithPricing (tip, itemLink, itemNum);
+	end
+)
+
+
 hooksecurefunc ( "InboxFrameItem_OnEnter",
   function ( self )
     local itemCount = select( 8, GetInboxHeaderInfo( self.index ) )
