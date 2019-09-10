@@ -377,6 +377,9 @@ local item_links = {}
 local pet_links = {}
 
 function Atr_ShowTipWithPricing (tip, link, num)
+  --num could be 0. but in this case, we still wanna check price
+  if num==0 then num=1 end
+  
   if link == nil or zc.IsBattlePetLink( link ) then
     if link and not pet_links[ link ] then
       pet_links[ link ] = Auctionator.ItemLink:new({ item_link = link })
