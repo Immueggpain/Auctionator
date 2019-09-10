@@ -2569,20 +2569,9 @@ function Atr_ShowRecTooltip ()
 
   if (link) then
     if (num < 1) then num = 1; end;
-
-    if (zc.IsBattlePetLink (link)) then
-      local speciesID, level, breedQuality, maxHealth, power, speed, battlePetID, name = zc.ParseBattlePetLink(link)
-
-      BattlePetToolTip_Show(speciesID, level, breedQuality, maxHealth, power, speed, name)
-
-      BattlePetTooltip:ClearAllPoints();
-      BattlePetTooltip:SetPoint("BOTTOMLEFT", Atr_RecommendItem_Tex, "BOTTOMRIGHT", 10, 0)
-
-    else
-      GameTooltip:SetOwner(Atr_RecommendItem_Tex, "ANCHOR_RIGHT");
-      GameTooltip:SetHyperlink (link, num);
-      gCurrentPane.tooltipvisible = true;
-    end
+	GameTooltip:SetOwner(Atr_RecommendItem_Tex, "ANCHOR_RIGHT");
+	GameTooltip:SetHyperlink (link, num);
+	gCurrentPane.tooltipvisible = true;
   end
 
 end
@@ -3396,17 +3385,6 @@ function Atr_ShowLineTooltip (self)
 
   local itemLink = self.itemLink;
 
-  if (zc.IsBattlePetLink (itemLink)) then
-
-    local speciesID, level, breedQuality, maxHealth, power, speed, battlePetID, name = zc.ParseBattlePetLink(itemLink)
-
-    BattlePetToolTip_Show(speciesID, level, breedQuality, maxHealth, power, speed, name)
-
-    BattlePetTooltip:ClearAllPoints();
-    BattlePetTooltip:SetPoint("BOTTOMRIGHT", self, "TOPRIGHT", 10, 0)
-
-  else   -- normal case
-
     local fname = self:GetName()
     local ftname = fname.."_EntryText"
     local textPart = _G[ftname]
@@ -3415,7 +3393,6 @@ function Atr_ShowLineTooltip (self)
       GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -280)
       GameTooltip:SetHyperlink (itemLink, 1)
     end
-  end
 end
 
 
