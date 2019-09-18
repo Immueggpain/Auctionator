@@ -2050,6 +2050,8 @@ end
 
 function Atr_SortHistoryData (x, y)
   Auctionator.Debug.Message( 'Atr_SortHistoryData', x, y )
+  
+  if x.when==y.when and x.hl and y.hl then return x.hl>y.hl end
 
   return x.when > y.when;
 
