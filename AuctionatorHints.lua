@@ -690,7 +690,7 @@ hooksecurefunc (ItemRefTooltip, "SetHyperlink",
 );
 ]]
 
-local lastRecipeItem=nil
+local lastRecipeItem={}
 
 ItemRefTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
   local itemName, itemLink = tooltip:GetItem()
@@ -699,16 +699,40 @@ ItemRefTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
     isCraftingReagent = GetItemInfo(itemLink)
 	
   if itemClassID == LE_ITEM_CLASS_RECIPE then
-    if lastRecipeItem == itemName then
+    if lastRecipeItem[tooltip] == itemName then
       Atr_ShowTipWithPricing (tooltip, itemLink);
-	  lastRecipeItem=nil
+	  lastRecipeItem[tooltip]=nil
 	else
 	  local outputItemName = string.match(itemName, "：(.+)")
 	  --tooltip:AddDoubleLine( 'itemName', itemName)
 	  tooltip:AddDoubleLine( 'outputItemName', outputItemName)
 	  local auctionPrice = Atr_GetAuctionPrice (outputItemName)
       Atr_New_AddAuctionPrice (tooltip, auctionPrice)
-	  lastRecipeItem = itemName
+	  lastRecipeItem[tooltip] = itemName
+	end
+	return
+  end
+  
+  Atr_ShowTipWithPricing (tooltip, itemLink);
+end)
+
+GameTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
+  local itemName, itemLink = tooltip:GetItem()
+  local _, _, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, 
+    itemEquipLoc, itemIcon, itemSellPrice, itemClassID, itemSubClassID, bindType, expacID, itemSetID, 
+    isCraftingReagent = GetItemInfo(itemLink)
+	
+  if itemClassID == LE_ITEM_CLASS_RECIPE then
+    if lastRecipeItem[tooltip] == itemName then
+      Atr_ShowTipWithPricing (tooltip, itemLink);
+	  lastRecipeItem[tooltip]=nil
+	else
+	  local outputItemName = string.match(itemName, "：(.+)")
+	  --tooltip:AddDoubleLine( 'itemName', itemName)
+	  tooltip:AddDoubleLine( 'outputItemName', outputItemName)
+	  local auctionPrice = Atr_GetAuctionPrice (outputItemName)
+      Atr_New_AddAuctionPrice (tooltip, auctionPrice)
+	  lastRecipeItem[tooltip] = itemName
 	end
 	return
   end
