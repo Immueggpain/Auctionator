@@ -302,7 +302,7 @@ end
 
 -----------------------------------------
 
-function Atr_STWP_AddVendorInfo (tip, xstring, vendorPrice, auctionPrice)
+function Atr_STWP_AddVendorInfo (tip, xstring, vendorPrice)
   if (AUCTIONATOR_V_TIPS == 1 and vendorPrice > 0) then
     tip:AddDoubleLine (ZT("Vendor")..xstring, "|cFFFFFFFF"..zc.priceToMoneyString (vendorPrice))
   end
@@ -376,7 +376,7 @@ end
 local item_links = {}
 local pet_links = {}
 
-function Atr_New_ShowTipWithPricing (tip, link, num)
+function Atr_ShowTipWithPricing (tip, link, num)
   --num could be 0. but in this case, we still wanna check price
   if num==0 then num=1 end
   
@@ -445,7 +445,7 @@ function Atr_New_ShowTipWithPricing (tip, link, num)
 
   -- vendor info
 
-  Atr_STWP_AddVendorInfo (tip, xstring, vendorPrice, auctionPrice)
+  Atr_STWP_AddVendorInfo (tip, xstring, vendorPrice)
 
   -- auction info
 
@@ -717,6 +717,10 @@ end)
 -- just for inner output item of recipe
 GameTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
   local itemName, itemLink = tooltip:GetItem()
+  
+  -- donno why but sometimes it's nil
+  if itemName==nil then return end
+  
   local _, _, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, 
     itemEquipLoc, itemIcon, itemSellPrice, itemClassID, itemSubClassID, bindType, expacID, itemSetID, 
     isCraftingReagent = GetItemInfo(itemLink)
@@ -733,6 +737,7 @@ GameTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
 	  tooltip:AddDoubleLine( 'outputItemName', outputItemName)
 	  local auctionPrice = Atr_GetAuctionPrice (outputItemName)
       Atr_New_AddAuctionPrice (tooltip, auctionPrice)
+	  tooltip:Show()
 	  lastRecipeItem[tooltip] = itemName
 	end
   end
@@ -761,14 +766,14 @@ function Atr_New_ShowTipWithPricing (tip, link, num)
     xstring = "|cFFAAAAFF x" .. num .. "|r"
   end
 
-  local vendorPrice, auctionPrice, dePrice = Atr_STWP_GetPrices (link, num, showStackPrices, itemVendorPrice, itemName, itemClassID, itemRarity, itemLevel);
+  local vendorPrice, auctionPrice, dePrice = Atr_STWP_GetPrices (link, num, showStackPrices, itemSellPrice, itemName, itemClassID, itemRarity, itemLevel);
 
   -- vendor info
-
-  Atr_STWP_AddVendorInfo (tip, xstring, vendorPrice, auctionPrice)
+  
+  Atr_STWP_AddVendorInfo (tip, xstring, vendorPrice)
 
   -- auction info
-
+  
   Atr_STWP_AddAuctionInfo (tip, xstring, link, auctionPrice)
 
   -- disenchanting info
