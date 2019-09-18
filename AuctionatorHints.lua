@@ -717,6 +717,7 @@ ItemRefTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
   Atr_ShowTipWithPricing (tooltip, itemLink);
 end)
 
+--[[ can't use it cuz we need to know stacking num
 GameTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
   local itemName, itemLink = tooltip:GetItem()
   local _, _, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, 
@@ -740,6 +741,7 @@ GameTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
   
   Atr_ShowTipWithPricing (tooltip, itemLink);
 end)
+]]
 
 function Atr_New_AddAuctionPrice (tip, auctionPrice)
   xstring = "|cFFAAAAFF x" .. 1 .. "|r"
