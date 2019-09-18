@@ -738,6 +738,7 @@ GameTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
   end
 end)
 
+-- this is called only once per item, so can't be used in OnTooltipSetItem
 function Atr_New_ShowTipWithPricing (tip, link, num)
   -- idk why but link may be nil
   if link==nil then return end
@@ -745,30 +746,8 @@ function Atr_New_ShowTipWithPricing (tip, link, num)
   -- num must >= 1
   if num==0 or num==nil then num=1 end
   
-  local itemName, itemLink, itemRarity, _, itemMinLevel, itemType, _, _, _, _, itemVendorPrice, classID = GetItemInfo (link);
-  
-  -- get itemClassID
-  local _, _, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, 
-    itemEquipLoc, itemIcon, itemSellPrice, itemClassID, itemSubClassID, bindType, expacID, itemSetID, 
-    isCraftingReagent = GetItemInfo(itemLink)
-  
-  --[[ if itemClassID is recipe, check if 1st or 2nd time set.
-  if itemClassID == LE_ITEM_CLASS_RECIPE then
-    if lastRecipeItem[tip] == itemName then
-	  -- 2nd time set, just go normal flow
-	  lastRecipeItem[tip]=nil
-	else
-	  -- 1st time set, special flow
-	  local outputItemName = string.match(itemName, "：(.+)")
-	  --tip:AddDoubleLine( 'itemName', itemName)
-	  tip:AddDoubleLine( 'outputItemName', outputItemName)
-	  local auctionPrice = Atr_GetAuctionPrice (outputItemName)
-      Atr_New_AddAuctionPrice (tip, auctionPrice)
-	  lastRecipeItem[tip] = itemName
-	  return
-	end
-  end
-  ]]
+  local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemIcon, itemSellPrice, 
+    itemClassID, itemSubClassID, bindType, expacID, itemSetID, isCraftingReagent = GetItemInfo (link);
   
   local itemLevel = ItemUpgradeInfo:GetUpgradedItemLevel( itemLink )
 
@@ -782,7 +761,7 @@ function Atr_New_ShowTipWithPricing (tip, link, num)
     xstring = "|cFFAAAAFF x" .. num .. "|r"
   end
 
-  local vendorPrice, auctionPrice, dePrice = Atr_STWP_GetPrices (link, num, showStackPrices, itemVendorPrice, itemName, classID, itemRarity, itemLevel);
+  local vendorPrice, auctionPrice, dePrice = Atr_STWP_GetPrices (link, num, showStackPrices, itemVendorPrice, itemName, itemClassID, itemRarity, itemLevel);
 
   -- vendor info
 
@@ -805,7 +784,7 @@ function Atr_New_ShowTipWithPricing (tip, link, num)
   if (AUCTIONATOR_DE_DETAILS_TIPS == 5) then showDetails = true; end;
 
   if (showDetails and dePrice ~= nil) then
-    Atr_AddDEDetailsToTip (tip, classID, itemRarity, itemLevel)
+    Atr_AddDEDetailsToTip (tip, itemClassID, itemRarity, itemLevel)
   end
 
 
