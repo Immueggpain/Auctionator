@@ -739,7 +739,9 @@ GameTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
 end)
 
 function Atr_New_ShowTipWithPricing (tip, link, num)
+  -- idk why but link may be nil
   if link==nil then return end
+  
   -- num must >= 1
   if num==0 or num==nil then num=1 end
   
