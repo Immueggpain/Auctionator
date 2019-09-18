@@ -496,15 +496,12 @@ hooksecurefunc (GameTooltip, "SetBuybackItem",
   end
 );
 
-
---[[
 hooksecurefunc (GameTooltip, "SetBagItem",
   function(tip, bag, slot)
     local _, num = GetContainerItemInfo(bag, slot);
     Atr_ShowTipWithPricing (tip, GetContainerItemLink(bag, slot), num);
   end
 );
-]]
 
 hooksecurefunc (GameTooltip, "SetAuctionItem",
   function (tip, type, index)
@@ -659,7 +656,7 @@ hooksecurefunc ( "InboxFrameItem_OnEnter",
           if num > 1 then
             Atr_ShowTipWithPricing( GameTooltip, attachLink, num )
           else
-            Atr_ShowTipWithPricing( GameTooltip, attachLink )
+            Atr_ShowTipWithPricing( GameTooltip, attachLink, 1 )
           end
         end
       end
@@ -686,7 +683,7 @@ hooksecurefunc (GameTooltip, "SetHyperlink",
 hooksecurefunc (ItemRefTooltip, "SetHyperlink",
   function (tip, itemstring)
     local name, link = GetItemInfo (itemstring);
-    Atr_ShowTipWithPricing (tip, link);
+    Atr_ShowTipWithPricing (tip, link, 1);
   end
 );
 ]]
@@ -701,7 +698,7 @@ ItemRefTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
 	
   if itemClassID == LE_ITEM_CLASS_RECIPE then
     if lastRecipeItem[tooltip] == itemName then
-      Atr_ShowTipWithPricing (tooltip, itemLink);
+      Atr_ShowTipWithPricing (tooltip, itemLink, 1);
 	  lastRecipeItem[tooltip]=nil
 	else
 	  local outputItemName = string.match(itemName, "：(.+)")
@@ -714,7 +711,7 @@ ItemRefTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
 	return
   end
   
-  Atr_ShowTipWithPricing (tooltip, itemLink);
+  Atr_ShowTipWithPricing (tooltip, itemLink, 1);
 end)
 
 --[[ can't use it cuz we need to know stacking num
@@ -726,7 +723,7 @@ GameTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
 	
   if itemClassID == LE_ITEM_CLASS_RECIPE then
     if lastRecipeItem[tooltip] == itemName then
-      Atr_ShowTipWithPricing (tooltip, itemLink);
+      Atr_ShowTipWithPricing (tooltip, itemLink, 1);
 	  lastRecipeItem[tooltip]=nil
 	else
 	  local outputItemName = string.match(itemName, "：(.+)")
@@ -739,7 +736,7 @@ GameTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
 	return
   end
   
-  Atr_ShowTipWithPricing (tooltip, itemLink);
+  Atr_ShowTipWithPricing (tooltip, itemLink, 1);
 end)
 ]]
 
