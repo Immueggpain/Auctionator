@@ -787,7 +787,6 @@ function Atr_New_ShowTipWithPricing (tip, link, num)
     Atr_AddDEDetailsToTip (tip, itemClassID, itemRarity, itemLevel)
   end
 
-
   tip:Show()
 end
 
