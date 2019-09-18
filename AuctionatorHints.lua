@@ -690,7 +690,42 @@ hooksecurefunc (ItemRefTooltip, "SetHyperlink",
 );
 ]]
 
+local lastRecipeItem=nil
+
 ItemRefTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
-  local name, link = tooltip:GetItem()
-  Atr_ShowTipWithPricing (tooltip, link);
+  local itemName, itemLink = tooltip:GetItem()
+  local _, _, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, 
+    itemEquipLoc, itemIcon, itemSellPrice, itemClassID, itemSubClassID, bindType, expacID, itemSetID, 
+    isCraftingReagent = GetItemInfo(itemLink)
+	
+  if itemClassID == LE_ITEM_CLASS_RECIPE then
+    if lastRecipeItem == itemName then
+      Atr_ShowTipWithPricing (tooltip, itemLink);
+	  lastRecipeItem=nil
+	else
+	  local outputItemName = string.match(itemName, "：(.+)")
+	  --tooltip:AddDoubleLine( 'itemName', itemName)
+	  tooltip:AddDoubleLine( 'outputItemName', outputItemName)
+	  local auctionPrice = Atr_GetAuctionPrice (outputItemName)
+      Atr_New_AddAuctionPrice (tooltip, auctionPrice)
+	  lastRecipeItem = itemName
+	end
+	return
+  end
+  
+  Atr_ShowTipWithPricing (tooltip, itemLink);
 end)
+
+function Atr_New_AddAuctionPrice (tip, auctionPrice)
+  xstring = "|cFFAAAAFF x" .. 1 .. "|r"
+  
+  if AUCTIONATOR_A_TIPS == 1 then
+    if (auctionPrice ~= nil) then
+      tip:AddDoubleLine (ZT("Auction")..xstring, "|cFFFFFFFF"..zc.priceToMoneyString (auctionPrice));
+    else
+      tip:AddDoubleLine (ZT("Auction")..xstring, "|cFFFFFFFF"..ZT("unknown").."  ");
+    end
+  end
+end
+
+
