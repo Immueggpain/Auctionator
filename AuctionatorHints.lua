@@ -497,13 +497,14 @@ hooksecurefunc (GameTooltip, "SetBuybackItem",
 );
 
 
-
+--[[
 hooksecurefunc (GameTooltip, "SetBagItem",
   function(tip, bag, slot)
     local _, num = GetContainerItemInfo(bag, slot);
     Atr_ShowTipWithPricing (tip, GetContainerItemLink(bag, slot), num);
   end
 );
+]]
 
 hooksecurefunc (GameTooltip, "SetAuctionItem",
   function (tip, type, index)
