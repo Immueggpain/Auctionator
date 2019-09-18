@@ -376,7 +376,7 @@ end
 local item_links = {}
 local pet_links = {}
 
-function Atr_ShowTipWithPricing (tip, link, num)
+function Atr_New_ShowTipWithPricing (tip, link, num)
   --num could be 0. but in this case, we still wanna check price
   if num==0 then num=1 end
   
@@ -485,28 +485,28 @@ end
 hooksecurefunc (GameTooltip, "SetMerchantItem",
   function(tip, index)
     local _, _, _, num = GetMerchantItemInfo(index);
-    Atr_ShowTipWithPricing (tip, GetMerchantItemLink(index), num);
+    Atr_New_ShowTipWithPricing (tip, GetMerchantItemLink(index), num);
   end
 );
 
 hooksecurefunc (GameTooltip, "SetBuybackItem",
   function(tip, index)
     local _, _, _, num = GetBuybackItemInfo(index);
-    Atr_ShowTipWithPricing (tip, GetBuybackItemLink(index), num);
+    Atr_New_ShowTipWithPricing (tip, GetBuybackItemLink(index), num);
   end
 );
 
 hooksecurefunc (GameTooltip, "SetBagItem",
   function(tip, bag, slot)
     local _, num = GetContainerItemInfo(bag, slot);
-    Atr_ShowTipWithPricing (tip, GetContainerItemLink(bag, slot), num);
+    Atr_New_ShowTipWithPricing (tip, GetContainerItemLink(bag, slot), num);
   end
 );
 
 hooksecurefunc (GameTooltip, "SetAuctionItem",
   function (tip, type, index)
     local _, _, num = GetAuctionItemInfo(type, index);
-    Atr_ShowTipWithPricing (tip, GetAuctionItemLink(type, index), num);
+    Atr_New_ShowTipWithPricing (tip, GetAuctionItemLink(type, index), num);
   end
 );
 
@@ -514,7 +514,7 @@ hooksecurefunc (GameTooltip, "SetAuctionSellItem",
   function (tip)
     local name, _, count = GetAuctionSellItemInfo();
     local __, link = GetItemInfo(name);
-    Atr_ShowTipWithPricing (tip, link, num);
+    Atr_New_ShowTipWithPricing (tip, link, num);
   end
 );
 
@@ -523,7 +523,7 @@ hooksecurefunc (GameTooltip, "SetLootItem",
   function (tip, slot)
     if LootSlotHasItem(slot) then
       local link, _, num = GetLootSlotLink(slot);
-      Atr_ShowTipWithPricing (tip, link, num);
+      Atr_New_ShowTipWithPricing (tip, link, num);
     end
   end
 );
@@ -531,14 +531,14 @@ hooksecurefunc (GameTooltip, "SetLootItem",
 hooksecurefunc (GameTooltip, "SetLootRollItem",
   function (tip, slot)
     local _, _, num = GetLootRollItemInfo(slot);
-    Atr_ShowTipWithPricing (tip, GetLootRollItemLink(slot), num);
+    Atr_New_ShowTipWithPricing (tip, GetLootRollItemLink(slot), num);
   end
 );
 
 
 hooksecurefunc (GameTooltip, "SetInventoryItem",
   function (tip, unit, slot)
-    Atr_ShowTipWithPricing (tip, GetInventoryItemLink(unit, slot), GetInventoryItemCount(unit, slot));
+    Atr_New_ShowTipWithPricing (tip, GetInventoryItemLink(unit, slot), GetInventoryItemCount(unit, slot));
   end
 );
 
@@ -547,7 +547,7 @@ hooksecurefunc (GameTooltip, "SetInventoryItem",
 hooksecurefunc (GameTooltip, "SetGuildBankItem",
   function (tip, tab, slot)
     local _, num = GetGuildBankItemInfo(tab, slot);
-    Atr_ShowTipWithPricing (tip, GetGuildBankItemLink(tab, slot), num);
+    Atr_New_ShowTipWithPricing (tip, GetGuildBankItemLink(tab, slot), num);
   end
 );
 ]]
@@ -559,7 +559,7 @@ hooksecurefunc( GameTooltip, 'SetRecipeResultItem',
     local link = C_TradeSkillUI.GetRecipeItemLink( itemId )
     local count  = C_TradeSkillUI.GetRecipeNumItemsProduced( itemId )
 
-    Atr_ShowTipWithPricing( tip, link, count )
+    Atr_New_ShowTipWithPricing( tip, link, count )
   end
 );
 
@@ -568,7 +568,7 @@ hooksecurefunc( GameTooltip, 'SetRecipeReagentItem',
     local link = C_TradeSkillUI.GetRecipeReagentItemLink( itemId, index )
     local count = select( 3, C_TradeSkillUI.GetRecipeReagentInfo( itemId, index ) )
 
-    Atr_ShowTipWithPricing( tip, link, count )
+    Atr_New_ShowTipWithPricing( tip, link, count )
   end
 );
 ]]
@@ -576,21 +576,21 @@ hooksecurefunc( GameTooltip, 'SetRecipeReagentItem',
 hooksecurefunc (GameTooltip, "SetTradePlayerItem",
   function (tip, id)
     local _, _, num = GetTradePlayerItemInfo(id);
-    Atr_ShowTipWithPricing (tip, GetTradePlayerItemLink(id), num);
+    Atr_New_ShowTipWithPricing (tip, GetTradePlayerItemLink(id), num);
   end
 );
 
 hooksecurefunc (GameTooltip, "SetTradeTargetItem",
   function (tip, id)
     local _, _, num = GetTradeTargetItemInfo(id);
-    Atr_ShowTipWithPricing (tip, GetTradeTargetItemLink(id), num);
+    Atr_New_ShowTipWithPricing (tip, GetTradeTargetItemLink(id), num);
   end
 );
 
 hooksecurefunc (GameTooltip, "SetQuestItem",
   function (tip, type, index)
     local _, _, num = GetQuestItemInfo(type, index);
-    Atr_ShowTipWithPricing (tip, GetQuestItemLink(type, index), num);
+    Atr_New_ShowTipWithPricing (tip, GetQuestItemLink(type, index), num);
   end
 );
 
@@ -603,7 +603,7 @@ hooksecurefunc (GameTooltip, "SetQuestLogItem",
       _, _, num = GetQuestLogRewardInfo(index)
     end
 
-    Atr_ShowTipWithPricing (tip, GetQuestLogItemLink(type, index), num);
+    Atr_New_ShowTipWithPricing (tip, GetQuestLogItemLink(type, index), num);
   end
 );
 
@@ -613,7 +613,7 @@ hooksecurefunc (GameTooltip, "SetInboxItem",
       local attachmentIndex = attachIndex or 1
       local _, _, _, num = GetInboxItem(index, attachmentIndex);
 
-      Atr_ShowTipWithPricing (tip, GetInboxItemLink(index, attachmentIndex), num);
+      Atr_New_ShowTipWithPricing (tip, GetInboxItemLink(index, attachmentIndex), num);
     end
   end
 );
@@ -632,7 +632,7 @@ hooksecurefunc(GameTooltip,"SetTradeSkillItem",
 			itemLink = GetTradeSkillReagentItemLink(skillIndex,reagentIndex)
 			_, _, itemNum, _ = GetTradeSkillReagentInfo(skillIndex, reagentIndex)
 		end
-		Atr_ShowTipWithPricing (tip, itemLink, itemNum);
+		Atr_New_ShowTipWithPricing (tip, itemLink, itemNum);
 	end
 )
 
@@ -654,9 +654,9 @@ hooksecurefunc ( "InboxFrameItem_OnEnter",
           GameTooltip:AddLine( attachLink )
 
           if num > 1 then
-            Atr_ShowTipWithPricing( GameTooltip, attachLink, num )
+            Atr_New_ShowTipWithPricing( GameTooltip, attachLink, num )
           else
-            Atr_ShowTipWithPricing( GameTooltip, attachLink, 1 )
+            Atr_New_ShowTipWithPricing( GameTooltip, attachLink, 1 )
           end
         end
       end
@@ -668,14 +668,14 @@ hooksecurefunc (GameTooltip, "SetSendMailItem",
   function (tip, id)
     local name, _, _, num = GetSendMailItem(id)
     local name, link = GetItemInfo(name);
-    Atr_ShowTipWithPricing (tip, link, num);
+    Atr_New_ShowTipWithPricing (tip, link, num);
   end
 );
 
 hooksecurefunc (GameTooltip, "SetHyperlink",
   function (tip, itemstring, num)
     local name, link = GetItemInfo (itemstring);
-    Atr_ShowTipWithPricing (tip, link, num);
+    Atr_New_ShowTipWithPricing (tip, link, num);
   end
 );
 
@@ -683,7 +683,7 @@ hooksecurefunc (GameTooltip, "SetHyperlink",
 hooksecurefunc (ItemRefTooltip, "SetHyperlink",
   function (tip, itemstring)
     local name, link = GetItemInfo (itemstring);
-    Atr_ShowTipWithPricing (tip, link, 1);
+    Atr_New_ShowTipWithPricing (tip, link, 1);
   end
 );
 ]]
@@ -698,7 +698,7 @@ ItemRefTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
 	
   if itemClassID == LE_ITEM_CLASS_RECIPE then
     if lastRecipeItem[tooltip] == itemName then
-      Atr_ShowTipWithPricing (tooltip, itemLink, 1);
+      Atr_New_ShowTipWithPricing (tooltip, itemLink, 1);
 	  lastRecipeItem[tooltip]=nil
 	else
 	  local outputItemName = string.match(itemName, "：(.+)")
@@ -711,10 +711,10 @@ ItemRefTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
 	return
   end
   
-  Atr_ShowTipWithPricing (tooltip, itemLink, 1);
+  Atr_New_ShowTipWithPricing (tooltip, itemLink, 1);
 end)
 
---[[ can't use it cuz we need to know stacking num
+-- just for inner output item of recipe
 GameTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
   local itemName, itemLink = tooltip:GetItem()
   local _, _, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, 
@@ -723,9 +723,11 @@ GameTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
 	
   if itemClassID == LE_ITEM_CLASS_RECIPE then
     if lastRecipeItem[tooltip] == itemName then
-      Atr_ShowTipWithPricing (tooltip, itemLink, 1);
+	  -- 2nd time set, let it pass
 	  lastRecipeItem[tooltip]=nil
+      return
 	else
+	  -- 1st time set, inner output item
 	  local outputItemName = string.match(itemName, "：(.+)")
 	  --tooltip:AddDoubleLine( 'itemName', itemName)
 	  tooltip:AddDoubleLine( 'outputItemName', outputItemName)
@@ -733,12 +735,80 @@ GameTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
       Atr_New_AddAuctionPrice (tooltip, auctionPrice)
 	  lastRecipeItem[tooltip] = itemName
 	end
-	return
   end
-  
-  Atr_ShowTipWithPricing (tooltip, itemLink, 1);
 end)
-]]
+
+function Atr_New_ShowTipWithPricing (tip, link, num)
+  if link==nil then return end
+  -- num must >= 1
+  if num==0 or num==nil then num=1 end
+  
+  local itemName, itemLink, itemRarity, _, itemMinLevel, itemType, _, _, _, _, itemVendorPrice, classID = GetItemInfo (link);
+  
+  -- get itemClassID
+  local _, _, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, 
+    itemEquipLoc, itemIcon, itemSellPrice, itemClassID, itemSubClassID, bindType, expacID, itemSetID, 
+    isCraftingReagent = GetItemInfo(itemLink)
+  
+  --[[ if itemClassID is recipe, check if 1st or 2nd time set.
+  if itemClassID == LE_ITEM_CLASS_RECIPE then
+    if lastRecipeItem[tip] == itemName then
+	  -- 2nd time set, just go normal flow
+	  lastRecipeItem[tip]=nil
+	else
+	  -- 1st time set, special flow
+	  local outputItemName = string.match(itemName, "：(.+)")
+	  --tip:AddDoubleLine( 'itemName', itemName)
+	  tip:AddDoubleLine( 'outputItemName', outputItemName)
+	  local auctionPrice = Atr_GetAuctionPrice (outputItemName)
+      Atr_New_AddAuctionPrice (tip, auctionPrice)
+	  lastRecipeItem[tip] = itemName
+	  return
+	end
+  end
+  ]]
+  
+  local itemLevel = ItemUpgradeInfo:GetUpgradedItemLevel( itemLink )
+
+  local showStackPrices = IsShiftKeyDown();
+  if (AUCTIONATOR_SHIFT_TIPS == 2) then
+    showStackPrices = not IsShiftKeyDown();
+  end
+
+  local xstring = "";
+  if num and showStackPrices then
+    xstring = "|cFFAAAAFF x" .. num .. "|r"
+  end
+
+  local vendorPrice, auctionPrice, dePrice = Atr_STWP_GetPrices (link, num, showStackPrices, itemVendorPrice, itemName, classID, itemRarity, itemLevel);
+
+  -- vendor info
+
+  Atr_STWP_AddVendorInfo (tip, xstring, vendorPrice, auctionPrice)
+
+  -- auction info
+
+  Atr_STWP_AddAuctionInfo (tip, xstring, link, auctionPrice)
+
+  -- disenchanting info
+
+  Atr_STWP_AddBasicDEInfo (tip, xstring, dePrice)
+
+  local showDetails = true;
+
+  if (AUCTIONATOR_DE_DETAILS_TIPS == 1) then showDetails = IsShiftKeyDown(); end;
+  if (AUCTIONATOR_DE_DETAILS_TIPS == 2) then showDetails = IsControlKeyDown(); end;
+  if (AUCTIONATOR_DE_DETAILS_TIPS == 3) then showDetails = IsAltKeyDown(); end;
+  if (AUCTIONATOR_DE_DETAILS_TIPS == 4) then showDetails = false; end;
+  if (AUCTIONATOR_DE_DETAILS_TIPS == 5) then showDetails = true; end;
+
+  if (showDetails and dePrice ~= nil) then
+    Atr_AddDEDetailsToTip (tip, classID, itemRarity, itemLevel)
+  end
+
+
+  tip:Show()
+end
 
 function Atr_New_AddAuctionPrice (tip, auctionPrice)
   xstring = "|cFFAAAAFF x" .. 1 .. "|r"
