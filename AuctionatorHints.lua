@@ -696,7 +696,7 @@ ItemRefTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
     itemEquipLoc, itemIcon, itemSellPrice, itemClassID, itemSubClassID, bindType, expacID, itemSetID, 
     isCraftingReagent = GetItemInfo(itemLink)
 	
-  if itemClassID == LE_ITEM_CLASS_RECIPE then
+  if itemClassID == LE_ITEM_CLASS_RECIPE and itemSubClassID~=LE_ITEM_RECIPE_BOOK and itemSubClassID~=LE_ITEM_RECIPE_ENCHANTING then
     if lastRecipeItem[tooltip] == itemName then
       Atr_New_ShowTipWithPricing (tooltip, itemLink, 1);
 	  lastRecipeItem[tooltip]=nil
@@ -725,7 +725,7 @@ GameTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
     itemEquipLoc, itemIcon, itemSellPrice, itemClassID, itemSubClassID, bindType, expacID, itemSetID, 
     isCraftingReagent = GetItemInfo(itemLink)
 	
-  if itemClassID == LE_ITEM_CLASS_RECIPE then
+  if itemClassID == LE_ITEM_CLASS_RECIPE and itemSubClassID~=LE_ITEM_RECIPE_BOOK and itemSubClassID~=LE_ITEM_RECIPE_ENCHANTING then
     if lastRecipeItem[tooltip] == itemName then
 	  -- 2nd time set, let it pass
 	  lastRecipeItem[tooltip]=nil
@@ -737,7 +737,6 @@ GameTooltip:HookScript("OnTooltipSetItem", function(tooltip, ...)
 	  tooltip:AddDoubleLine( 'outputItemName', outputItemName)
 	  local auctionPrice = Atr_GetAuctionPrice (outputItemName)
       Atr_New_AddAuctionPrice (tooltip, auctionPrice)
-	  tooltip:Show()
 	  lastRecipeItem[tooltip] = itemName
 	end
   end
