@@ -1,6 +1,6 @@
-## Interface: 11302
+## Interface: 11303
 ## Title: Auctionator-eiheihei
-## Version: 0.1.0
+## Version: 0.1.1
 ## Author: Borjamacare, Zirco, 诶嘿嘿
 ## X-Website: https://github.com/Immueggpain/Auctionator
 ## X-Localizations: enUS, itIT, deDE, ruRU, svSE, frFR, esES, zhTW
