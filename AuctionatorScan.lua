@@ -1549,9 +1549,9 @@ function Atr_BuildSortedScanHistoryList (itemName)
         elseif (day == todayScanDay - 1) then
           currentPane.sortedHist[n].whenText = ZT("Yesterday");
         else
-          currentPane.sortedHist[n].whenText = date("%A, %B %d", when);
+          currentPane.sortedHist[n].whenText = date("%Y-%m-%d, %a", when);
         end
-		currentPane.sortedHist[n].whenText = currentPane.sortedHist[n].whenText.." high"
+		currentPane.sortedHist[n].whenText = "high of "..currentPane.sortedHist[n].whenText
 		
 		-- by immueggpain, show both high and low
 		if lowlowprice ~= highlowprice then
@@ -1568,9 +1568,9 @@ function Atr_BuildSortedScanHistoryList (itemName)
 			elseif (day == todayScanDay - 1) then
 			  currentPane.sortedHist[n].whenText = ZT("Yesterday");
 			else
-			  currentPane.sortedHist[n].whenText = date("%A, %B %d", when);
+			  currentPane.sortedHist[n].whenText = date("%Y-%m-%d, %a", when);
 			end
-			currentPane.sortedHist[n].whenText = currentPane.sortedHist[n].whenText.." low"
+			currentPane.sortedHist[n].whenText = "low  of "..currentPane.sortedHist[n].whenText
 		end
 
         n = n + 1;
