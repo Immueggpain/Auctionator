@@ -1,6 +1,6 @@
 ## Interface: 11303
 ## Title: Auctionator-classic
-## Version: 1.0.4
+## Version: 1.0.5
 ## Author: Borjamacare, Zirco, 睡吧狗命要紧
 ## X-Website: https://github.com/Immueggpain/Auctionator
 ## X-Localizations: enUS, itIT, deDE, ruRU, svSE, frFR, esES, zhTW

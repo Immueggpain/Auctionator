@@ -14,11 +14,11 @@ before_deploy:
     # download githubrelease.py
     - ls -al
     - cd ..
-    - wget https://raw.githubusercontent.com/Immueggpain/citools/master/githubrelease.py
     - ls
     - zip Auctionator-Classic-$TRAVIS_TAG.zip Auctionator/*
     - cd -
     - mv ../Auctionator-Classic-$TRAVIS_TAG.zip ./Auctionator-Classic-$TRAVIS_TAG.zip
+    - wget https://raw.githubusercontent.com/Immueggpain/citools/master/githubrelease.py
 deploy:
     provider: script
     script: python3 githubrelease.py "Auctionator-Classic-$TRAVIS_TAG.zip"
