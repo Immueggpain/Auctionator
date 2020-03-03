@@ -1,6 +1,7 @@
 # .travis.yaml
 language: minimal
 before_install:
+    - pvenv versions
     - pyenv shell 3.7
     - pip3 install --upgrade pip
 before_deploy:
