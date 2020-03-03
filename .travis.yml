@@ -18,6 +18,7 @@ before_deploy:
     - ls
     - zip Auctionator-Classic-$TRAVIS_TAG.zip Auctionator/*
     - cd -
+    - mv ../Auctionator-Classic-$TRAVIS_TAG.zip ./Auctionator-Classic-$TRAVIS_TAG.zip
 deploy:
     provider: script
     script: python3 githubrelease.py "Auctionator-Classic-$TRAVIS_TAG.zip"
