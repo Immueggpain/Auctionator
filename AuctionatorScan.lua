@@ -1383,7 +1383,7 @@ function Atr_PrunePostDB()
       end
     end
 
-    if (now - recentWhen > 180 * 86400) then
+    if (now - recentWhen > 5 * 365 * 86400) then
       AUCTIONATOR_PRICING_HISTORY[itemName] = nil;
       --zc.md (itemName, "   ", date("%A, %B %d %Y", recentWhen));
       x = x + 1;
