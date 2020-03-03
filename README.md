@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/Immueggpain/Auctionator.svg?branch=master)](https://travis-ci.com/Immueggpain/Auctionator)
+
 # changes
 for classic client  
 fix search match  
