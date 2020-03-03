@@ -23,10 +23,7 @@ before_deploy:
     - ls -al
 deploy:
     provider: script
-    script: 
-        - pwd
-        - ls -al
-        - python3 githubrelease.py "Auctionator-Classic-$TRAVIS_TAG.zip"
+    script: pwd && ls -al && python3 githubrelease.py "Auctionator-Classic-$TRAVIS_TAG.zip"
     cleanup: false
     on:
         tags: true
