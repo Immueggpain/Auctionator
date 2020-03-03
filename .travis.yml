@@ -19,9 +19,14 @@ before_deploy:
     - cd -
     - mv ../Auctionator-Classic-$TRAVIS_TAG.zip ./Auctionator-Classic-$TRAVIS_TAG.zip
     - wget https://raw.githubusercontent.com/Immueggpain/citools/master/githubrelease.py
+    - pwd
+    - ls -al
 deploy:
     provider: script
-    script: python3 githubrelease.py "Auctionator-Classic-$TRAVIS_TAG.zip"
+    script: 
+        - python3 githubrelease.py "Auctionator-Classic-$TRAVIS_TAG.zip"
+        - pwd
+        - ls -al
     cleanup: false
     on:
         tags: true
