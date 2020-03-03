@@ -4,6 +4,8 @@ before_install:
     - pyenv versions
     - pyenv shell 3.7
     - pip3 install --upgrade pip
+after_success：
+    - pwd
 before_deploy:
     # install PyGithub
     - pip3 install PyGithub
