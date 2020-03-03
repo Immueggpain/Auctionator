@@ -294,7 +294,11 @@ function Atr_Buy_BuyNextOnPage ()
 
     if (Atr_DoesAuctionMatch ("list", i, gAtr_Buy_ItemName, gAtr_Buy_BuyoutPrice, gAtr_Buy_StackSize)) then
 
+	  local itemLink = GetAuctionItemLink("list", i)
       PlaceAuctionBid("list", i, gAtr_Buy_BuyoutPrice);
+	  
+	  -- record purchase
+	  Atr_AddHistoricalPrice(gAtr_Buy_ItemName, gAtr_Buy_BuyoutPrice/gAtr_Buy_StackSize, gAtr_Buy_StackSize, itemLink, 1)
 
       numBoughtThisPage  = numBoughtThisPage + 1;
       gAtr_Buy_NumBought = gAtr_Buy_NumBought + 1;

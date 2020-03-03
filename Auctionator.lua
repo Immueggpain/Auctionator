@@ -2090,9 +2090,10 @@ function ParseHist (tag, hist)
 
   local when, type = ParseHtag(tag);
 
-  local price, count  = strsplit(":", hist);
+  local price, count, isPurchase  = strsplit(":", hist);
 
   price = tonumber (price);
+  isPurchase = tonumber(isPurchase)
 
   local stacksize, numauctions;
 
@@ -2104,7 +2105,7 @@ function ParseHist (tag, hist)
     numauctions = tonumber (count);
   end
 
-  return when, type, price, stacksize, numauctions;
+  return when, type, price, stacksize, numauctions, isPurchase;
 
 end
 
@@ -2142,7 +2143,7 @@ function Atr_Condense_History (itemname)
   for tag, hist in pairs (AUCTIONATOR_PRICING_HISTORY[itemname]) do
     if (tag ~= "is") then
 
-      local when, type, price, stacksize, numauctions = ParseHist (tag, hist);
+      local when, type, price, stacksize, numauctions, isPurchase = ParseHist (tag, hist);
 
       local whnt = date("*t", when);
 
@@ -2162,6 +2163,7 @@ function Atr_Condense_History (itemname)
       tempHistory[n].price    = price;
       tempHistory[n].numauctions  = numauctions;
       tempHistory[n].stacksize  = stacksize;
+      tempHistory[n].isPurchase  = isPurchase;
       tempHistory[n].when     = when;
       tempHistory[n].newtag   = newtag;
       n = n + 1;
@@ -2193,18 +2195,18 @@ function Atr_Condense_History (itemname)
         count = thist.stacksize;
       end
 
-      AUCTIONATOR_PRICING_HISTORY[itemname][newtag] = tostring(thist.price)..":"..tostring(count);
+      AUCTIONATOR_PRICING_HISTORY[itemname][newtag] = tostring(thist.price)..":"..tostring(count)..":"..tostring(thist.isPurchase);
 
     else
 
       local hist = AUCTIONATOR_PRICING_HISTORY[itemname][newtag];
 
-      local when, type, price, stacksize, numauctions = ParseHist (newtag, hist);
+      local when, type, price, stacksize, numauctions, isPurchase = ParseHist (newtag, hist);
 
       local newNumAuctions = numauctions + thist.numauctions;
       local newPrice     = ((price * numauctions) + (thist.price * thist.numauctions)) / newNumAuctions;
 
-      AUCTIONATOR_PRICING_HISTORY[itemname][newtag] = tostring(newPrice)..":"..tostring(newNumAuctions);
+      AUCTIONATOR_PRICING_HISTORY[itemname][newtag] = tostring(newPrice)..":"..tostring(newNumAuctions)..":"..tostring(isPurchase and thist.isPurchase and 1 or nil);
     end
   end
 
@@ -2257,13 +2259,14 @@ function Atr_Build_PostingsList ()
     local tag, hist;
     for tag, hist in pairs (AUCTIONATOR_PRICING_HISTORY[itemName]) do
       if (tag ~= "is") then
-        local when, type, price = ParseHist (tag, hist);
+        local when, type, price, _, _, isPurchase = ParseHist (tag, hist);
         local entry = {};
 
         entry.itemPrice   = price;
         entry.type      = type;
         entry.when      = when;
         entry.yours     = true;
+		entry.isPurchase = isPurchase
         entry.whenText    = Atr_BuildPostHistText (entry);
 
         table.insert (gCurrentPane.sortedHist, entry)
@@ -2278,36 +2281,6 @@ function Atr_Build_PostingsList ()
   end
 
 end
-
------------------------------------------
-
-function Atr_GetMostRecentSale (itemName)
-  Auctionator.Debug.Message( 'Atr_GetMostRecentSale', itemName )
-
-  local recentPrice;
-  local recentWhen = 0;
-
-  if (AUCTIONATOR_PRICING_HISTORY and AUCTIONATOR_PRICING_HISTORY[itemName]) then
-    local n = 1;
-    local tag, hist;
-    for tag, hist in pairs (AUCTIONATOR_PRICING_HISTORY[itemName]) do
-      if (tag ~= "is") then
-        local when, type, price = ParseHist (tag, hist);
-
-        if (when > recentWhen) then
-          recentPrice = price;
-          recentWhen  = when;
-        end
-      end
-    end
-  end
-
-  return recentPrice;
-
-end
-
-
-
 
 -----------------------------------------
 
@@ -3352,18 +3325,34 @@ function Atr_BuildPostHistText(data)
 
   local datestr = "";
 
-  if (data.type == "hy") then
-    return ZT("average of your auctions for").." "..whentime.year;
-  elseif (data.type == "hm") then
-    if (nowtime.year == whentime.year) then
-      return ZT("average of your auctions for").." "..date("%B", when);
-    else
-      return ZT("average of your auctions for").." "..date("%B %Y", when);
-    end
-  elseif (data.type == "hd") then
-    return ZT("average of your auctions for").." "..monthDay(whentime);
+  if data.isPurchase==1 then
+	  if (data.type == "hy") then
+		return ZT("average of your purchases for").." "..whentime.year;
+	  elseif (data.type == "hm") then
+		if (nowtime.year == whentime.year) then
+		  return ZT("average of your purchases for").." "..date("%B", when);
+		else
+		  return ZT("average of your purchases for").." "..date("%B %Y", when);
+		end
+	  elseif (data.type == "hd") then
+		return ZT("average of your purchases for").." "..monthDay(whentime);
+	  else
+		return ZT("your purchase on").." "..monthDay(whentime)..date(" at %I:%M %p", when);
+	  end
   else
-    return ZT("your auction on").." "..monthDay(whentime)..date(" at %I:%M %p", when);
+	  if (data.type == "hy") then
+		return ZT("average of your auctions for").." "..whentime.year;
+	  elseif (data.type == "hm") then
+		if (nowtime.year == whentime.year) then
+		  return ZT("average of your auctions for").." "..date("%B", when);
+		else
+		  return ZT("average of your auctions for").." "..date("%B %Y", when);
+		end
+	  elseif (data.type == "hd") then
+		return ZT("average of your auctions for").." "..monthDay(whentime);
+	  else
+		return ZT("your auction on").." "..monthDay(whentime)..date(" at %I:%M %p", when);
+	  end
   end
 end
 
@@ -3941,9 +3930,6 @@ function Atr_GetNumItemInBags (targItemLink)
 
   local targItemName, targIsBattlePet = zc.ItemNamefromLink (targItemLink)
 
-  --zz (zc.printableLink(targItemLink))
-  --zz (zc.printableLink(targItemName), targIsBattlePet)
-
   for b = 1, #kBagIDs do
     bagID = kBagIDs[b];
 
@@ -4499,8 +4485,8 @@ end
 
 -----------------------------------------
 
-function Atr_AddHistoricalPrice (itemName, price, stacksize, itemLink, testwhen)
-  Auctionator.Debug.Message( 'Atr_AddHistoricalPrice', itemName, price, stacksize, itemLink, testwhen )
+function Atr_AddHistoricalPrice (itemName, price, stacksize, itemLink, isPurchase)
+  Auctionator.Debug.Message( 'Atr_AddHistoricalPrice', itemName, price, stacksize, itemLink, isPurchase )
 
   if (itemName == nil) then
     zz (" !!!!!!!!!!!!!!   itemName == nil");
@@ -4515,16 +4501,12 @@ function Atr_AddHistoricalPrice (itemName, price, stacksize, itemLink, testwhen)
 
   AUCTIONATOR_PRICING_HISTORY[itemName]["is"]  = item_link:IdString()
 
-  local hist = tostring( zc.round( price ) ) .. ":" .. stacksize
+  local hist = tostring( zc.round( price ) ) .. ":" .. stacksize .. ":" .. tostring(isPurchase)
 
   -- so multiple auctions close together don't generate too many entries
   local roundtime = floor (time() / 60) * 60;
 
   local tag = tostring(ToTightTime(roundtime));
-
-  if (testwhen) then
-    tag = tostring(ToTightTime(testwhen));
-  end
 
   AUCTIONATOR_PRICING_HISTORY[itemName][tag] = hist;
 
