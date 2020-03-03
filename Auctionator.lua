@@ -2148,11 +2148,11 @@ function Atr_Condense_History (itemname)
 
       local absYear, absMonth, absDay = CalcAbsTimes (when, whnt);
 
-      if (absNowYear - absYear >= 3) then
+      if (absNowYear - absYear >= 4) then
         newtag = BuildHtag ("hy", whnt.year, 1, 1);
-      elseif (absNowMonth - absMonth >= 2) then
+      elseif (absNowMonth - absMonth >= 12) then
         newtag = BuildHtag ("hm", whnt.year, whnt.month, 1);
-      elseif (absNowDay - absDay >= 2) then
+      elseif (absNowDay - absDay >= 60) then
         newtag = BuildHtag ("hd", whnt.year, whnt.month, whnt.day);
       else
         newtag = tag;
