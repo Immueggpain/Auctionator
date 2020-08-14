@@ -212,17 +212,11 @@ function Atr_SetupHookFunctions ()
   auctionator_orig_ContainerFrameItemButton_OnModifiedClick = ContainerFrameItemButton_OnModifiedClick;
   ContainerFrameItemButton_OnModifiedClick = Atr_ContainerFrameItemButton_OnModifiedClick;
 
-  auctionator_orig_AuctionFrameAuctions_Update = AuctionFrameAuctions_Update;
-  AuctionFrameAuctions_Update = Atr_AuctionFrameAuctions_Update;
-
-  auctionator_orig_CanShowRightUIPanel = CanShowRightUIPanel;
-  CanShowRightUIPanel = auctionator_CanShowRightUIPanel;
-
   auctionator_orig_ChatEdit_InsertLink = ChatEdit_InsertLink;
   ChatEdit_InsertLink = auctionator_ChatEdit_InsertLink;
 
-  auctionator_orig_ChatFrame_OnEvent = ChatFrame_OnEvent;
-  ChatFrame_OnEvent = auctionator_ChatFrame_OnEvent;
+  --auctionator_orig_ChatFrame_OnEvent = ChatFrame_OnEvent;
+  --ChatFrame_OnEvent = auctionator_ChatFrame_OnEvent;
 
 end
 
@@ -1576,14 +1570,6 @@ function Atr_OnAuctionMultiSellFailure()
 end
 
 
------------------------------------------
-
-function Atr_AuctionFrameAuctions_Update()
-  Auctionator.Debug.Message( 'Atr_AuctionFrameAuctions_Update' )
-
-  auctionator_orig_AuctionFrameAuctions_Update();
-
-end
 
 
 -----------------------------------------
@@ -1759,19 +1745,6 @@ end
 
 
 
-
------------------------------------------
-
-function auctionator_CanShowRightUIPanel(frame)
-  Auctionator.Debug.Message( 'auctionator_CanShowRightUIPanel', frame )
-
-  if (zc.StringSame (frame:GetName(), "TradeSkillFrame")) then
-    return 1;
-  end;
-
-  return auctionator_orig_CanShowRightUIPanel(frame);
-
-end
 
 -----------------------------------------
 
